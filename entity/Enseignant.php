@@ -2,8 +2,7 @@
 
 namespace App\Entity;
 
-class Eleve
-{
+class Enseignant{
     private $id;
     private $nom;
     private $motDePasse;
