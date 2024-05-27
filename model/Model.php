@@ -17,5 +17,20 @@ abstract class Model{
     }
     $stmt->execute($param);
   }
+
+  public function getAll($table)
+  {
+    $sql ="SELECT * FROM".$table;
+    return $this->executereq($sql);
+
+  }
+
+  public function getOne($table, $id)
+  {
+    $query = "SELECT * FROM " . $table . " WHERE id = :id";
+    return $this->executereq($query, ["id" => $id]);
+  }
+
+  abstract public function create($objet);
 	
 }
