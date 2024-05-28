@@ -16,9 +16,9 @@ class EnseignantModel extends Model
             "mail" => $enseignant->getEmail()
         ]);
 
-        // $id = $this->pdo->lastInsertId();
+        $id = $this->getPdo()->lastInsertId();
 
-        $_SESSION['enseignant'] = serialize( new Enseignant(NULL,$enseignant->getNom(),$enseignant->getMotDePasse(),$enseignant->getEmail() ));
+        $_SESSION['enseignant'] = serialize( new Enseignant($id,$enseignant->getNom(),$enseignant->getMotDePasse(),$enseignant->getEmail() ));
         
 
         return $_SESSION['enseignant'];
@@ -29,36 +29,27 @@ class EnseignantModel extends Model
 
     public function login($mail, $mdpEns)
     {
-        // Requête SQL pour sélectionner les informations de l'enseignant
-        $sql = "SELECT * FROM enseignant WHERE motDePasse = :mdp AND email = :email";
+        $sql = "SELECT * FROM enseignant WHERE  motDePasse = :mdp and email = :email ";
+        
+        $stmt =$this->executereq($sql, ["mdp" => $mdpEns, "email" => $mail]);
+        // var_dump($stmt);
+        
+        $resultat = $stmt->fetch();
 
-        // Exécution de la requête avec gestion des erreurs
-        try {
-            $stmt = $this->executereq($sql, ["mdp" => $mdpEns, "email" => $mail]);
+        if($resultat)
+        {
+            extract($resultat);
+            $_SESSION['enseignant'] = serialize( new Enseignant($id, $nom,$motDePasse,$email));
+            return $_SESSION['enseignant'];
 
-            // Vérification si la requête a retourné un résultat
-            if ($stmt === false) {
-                throw new Exception("Erreur lors de l'exécution de la requête SQL.");
-            }
-
-            // Récupération du résultat
-            $resultat = $stmt->fetch();
-
-            // Vérification si un enseignant a été trouvé
-            if ($resultat) {
-                extract($resultat);
-                $_SESSION['enseignant'] = serialize(new Enseignant($id, $nom, $motDePasse, $email));
-                return $_SESSION['enseignant'];
-            } else {
-                // Aucun enseignant trouvé
-                return null;
-            }
-        } catch (Exception $e) {
-            // Gestion des exceptions et affichage du message d'erreur
-            echo 'Erreur : ' . $e->getMessage();
-            return null;
         }
+
     }
+
+
+
+    
+
 
 
     public function Enseignants()

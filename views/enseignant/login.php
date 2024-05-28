@@ -14,11 +14,11 @@
     <form action="" method="post">
         <div class="mb-3">
             <label for="" class="form-label">mail</label>
-            <input type="text" name="login" class="form-label" placeholder="Entre votre mail ">
+            <input type="text" name="mail" class="form-label" placeholder="Entre votre mail ">
         </div>
         <div class="mb-3">
             <label for="" class="form-label">password</label>
-            <input type="password" name="mdp" class="form-label" placeholder="Entre votre mot de passe ">
+            <input type="password" name="mdpEns" class="form-label" placeholder="Entre votre mot de passe ">
         </div>
 
         <input type="submit" name="login_admin" class="btn btn-primary" value = "envoyer">

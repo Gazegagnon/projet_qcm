@@ -68,7 +68,7 @@
 		<!-- NAVBAR -->
 		<nav>
 			<i class='bx bx-menu' ></i>
-			<a href="#" class="nav-link">Bonjour </a>
+			<a href="#" class="nav-link">Bonjour   <?= unserialize($_SESSION['enseignant'])->getNom() ?></a>
 			
 			
 			
@@ -91,7 +91,7 @@
 				</div>
 				<a href="#" class="btn-download">
 					<i class='bx bxs-cloud-download' ></i>
-					<span class="text" onclick="window.location.href='personnel.php';">créer un nouveau QCM</span>
+					<span class="text" onclick="window.location.href='?action=add_qcm&id=<?= unserialize($_SESSION['enseignant'])->getId() ?>';">créer un nouveau QCM</span>
 				</a>
 			</div>
 
@@ -106,7 +106,7 @@
 			<div class="table-data">
 				<div class="order">
 					<div class="head">
-						<h3>tous les réponse au question de mes QCM</h3>
+						<h3>Tous les QCM</h3>
 						<i class='bx bx-search' ></i>
 						<i class='bx bx-filter' ></i>
 					</div>
@@ -114,8 +114,8 @@
 						<thead>
 							<tr>
 								<th>id</th>
-								<th>Réponse</th>
-								<th>Bonne Réponse</th>
+								<th>theme</th>
+								<th>question du Qcm</th>
 								
 
                                 <th>action</th>
@@ -125,25 +125,24 @@
 							
 							
 								
-									
+							<?php foreach($qcms as $qcm){ ?>	
 								<tr>
 									<td>
 					
-										<p></p>
+										<p><?= $qcm->getId()?></p>
 									</td>
-									<td><p></p></td>
+									<td><p><?= $qcm->getTheme()?></p></td>
 									<td>
-										<p></p>
+										<p><a href="?action=add_question&id=<?= $qcm->getId()?>">ajouter une nouvelles questions</a></p>
 									</td>
-									<td>
-										<p></p>
-									</td>
+
 									<td>
 										<a href="delete_personne.php?id=">sup</a>
 										<a href="up_personnel.php?id=">Mod</a>
 
 									</td>
 								</tr>
+							<?php }?>
 								
 							
 
@@ -158,41 +157,42 @@
 				</div>
 				<div class="todo">
 					<div class="head">
-						<h3>Tous les QCM</h3>
+						<h3>Tous les questions</h3>
 						<i class='bx bx-plus' ></i>
 						<i class='bx bx-filter' ></i>
 					</div>
 					<table style="width: 100%; border-collapse: collapse;">
 						<thead >
 							<tr>
-                                <th style="padding-bottom: 12px; text-align: left; font-size: 13px; border-bottom: 1px solid var(--grey) ">id</th>
-								<th style="padding-bottom: 12px; text-align: left; font-size: 13px; border-bottom: 1px solid var(--grey) ">theme</th>
+                                <th style="padding-bottom: 12px; text-align: left; font-size: 13px; border-bottom: 1px solid var(--grey) ">libelle</th>
+								<th style="padding-bottom: 12px; text-align: left; font-size: 13px; border-bottom: 1px solid var(--grey) ">points</th>
 								
-								<th style="padding-bottom: 12px; text-align: left; font-size: 13px; border-bottom: 1px solid var(--grey) ">action</th>
+								<th style="padding-bottom: 12px; text-align: left; font-size: 13px; border-bottom: 1px solid var(--grey) ">idQCM</th>
 
 							</tr>
 						</thead>
 						<tbody>
-							
+							<?php foreach($questions as $question){?>
 								
 								<tr>
 									<td style="padding: 16px 0;">
 										
-										<p></p>
+										<p><?= $question->getLibelle() ?></p>
 									</td>
 
                                     <td style="padding: 16px 0;">
 										
-										<p></p>
+										<p><?= $question->getPoints() ?></p>
+									</td>
+
+									<td style="padding: 16px 0;">
+										
+										<p><?= $question->getIdQcm() ?></p>
 									</td>
 									
-									<td style="padding: 16px 0;">
-										<a href="delete_equipe.php?id=">sup</a>
-										<a href="up_equipe.php?id=">Mod</a>
-                                        <a href="up_personnel.php?id=">add_reponse</a>
-									</td>
+									
 								</tr>
-							
+							<?php }?>
 							
 
 

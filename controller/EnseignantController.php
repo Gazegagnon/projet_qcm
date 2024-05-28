@@ -3,7 +3,13 @@
 namespace App\Controller;
 
 use App\Model\EnseignantModel;
+use App\Model\QcmModel;
+use App\Model\QuestionModel;
+use App\Entity\Qcm;
 use App\Entity\Enseignant;
+use App\Entity\Question;
+
+
 
 class EnseignantController extends Controller
 
@@ -11,6 +17,8 @@ class EnseignantController extends Controller
     public function EnseiHttps()
     {
         $enseignantMdl = new EnseignantModel;
+        $qcmMdl = new QcmModel;
+        $questionMdl = new QuestionModel;
 
         if(isset($_GET['action']))
         {
@@ -19,14 +27,23 @@ class EnseignantController extends Controller
             switch($action)
             {
                 case "enseignant":
-                    $this->render("enseignant/index");
+
+                    if(isset($_SESSION['enseignant']))
+                    {
+                        $idEns = unserialize($_SESSION['enseignant'])->getId();
+                        $qcms = $qcmMdl->getQcmByEns($idEns);
+                        $questions = $questionMdl->questions($idEns);
+                        
+                    }
+                    // var_dump($idEns);
+                    $this->render("enseignant/index", ["qcms" => $qcms, "questions" => $questions]);
                     break;
 
                 case "login_ens":
                     if(isset($_POST['login_admin']))
                     {
                         extract($_POST);
-                        $enseignantMdl->login($login, $mdp);
+                        $enseignantMdl->login($mail, $mdpEns);
                         if(isset($_SESSION['enseignant']))
                         {
                             header("location: ?action=enseignant");

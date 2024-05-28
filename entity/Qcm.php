@@ -8,7 +8,7 @@ class Qcm
     private $theme;
     private $idEnseignant;
 
-    public function __construct($id,  $theme, Enseignant $idEnseignant)
+    public function __construct($id,  $theme, $idEnseignant)
     {
         $this->id = $id;
         $this->theme = $theme;

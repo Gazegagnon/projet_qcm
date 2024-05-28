@@ -15,7 +15,9 @@ abstract class Model{
     foreach($param as $cle=>$valeur){
         $param[$cle]=htmlentities($valeur);
     }
+
     $stmt->execute($param);
+    return $stmt;
   }
 
   public function getAll($table)
@@ -29,6 +31,11 @@ abstract class Model{
   {
     $query = "SELECT * FROM " . $table . " WHERE id = :id";
     return $this->executereq($query, ["id" => $id]);
+  }
+
+  public function getPdo()
+  {
+    return $this->pdo;
   }
 
   abstract public function create($objet);
