@@ -9,7 +9,7 @@
 	<!-- My CSS -->
 	<link rel="stylesheet" href="public/css/app.css">
 
-	<title>AdminHub</title>
+	<title>Enseignant</title>
 </head>
 <body>
 
@@ -18,7 +18,7 @@
 	<section id="sidebar">
 		<a href="#" class="brand">
 			<i class='bx bxs-smile'></i>
-			<span class="text">AdminHub</span>
+			<span class="text">Enseignant</span>
 		</a>
 		<ul class="side-menu top">
 			<li class="active">
@@ -155,52 +155,120 @@
 						</tbody>
 					</table>
 				</div>
-				<div class="todo">
+				
+			</div>
+			<div class="table-data">
+				<div class="order">
 					<div class="head">
 						<h3>Tous les questions</h3>
-						<i class='bx bx-plus' ></i>
+						<i class='bx bx-search' ></i>
 						<i class='bx bx-filter' ></i>
 					</div>
-					<table style="width: 100%; border-collapse: collapse;">
-						<thead >
+					<table>
+						<thead>
 							<tr>
-                                <th style="padding-bottom: 12px; text-align: left; font-size: 13px; border-bottom: 1px solid var(--grey) ">libelle</th>
-								<th style="padding-bottom: 12px; text-align: left; font-size: 13px; border-bottom: 1px solid var(--grey) ">points</th>
+								<th>id</th>
+								<th>libelle</th>
+								<th>points</th>
+								<th>idQcm</th>
+								<th>reponse</th>
 								
-								<th style="padding-bottom: 12px; text-align: left; font-size: 13px; border-bottom: 1px solid var(--grey) ">idQCM</th>
 
+                                <th>action</th>
 							</tr>
 						</thead>
 						<tbody>
-							<?php foreach($questions as $question){?>
+							
+							
 								
+							<?php foreach($questions as $question){ ?>	
 								<tr>
-									<td style="padding: 16px 0;">
-										
+									<td><p><?= $question->getId()?></p></td>
+									<td>
+					
 										<p><?= $question->getLibelle() ?></p>
 									</td>
-
-                                    <td style="padding: 16px 0;">
-										
-										<p><?= $question->getPoints() ?></p>
-									</td>
-
-									<td style="padding: 16px 0;">
+									<td><p><?= $question->getPoints() ?></p></td>
+									<td >
 										
 										<p><?= $question->getIdQcm() ?></p>
 									</td>
-									
-									
+									<td>
+										<p><a href="?action=add_Reponse&id=<?= $question->getId()?>">ajouter une nouvelle reponse</a></p>
+									</td>
+
+									<td>
+										<a href="delete_personne.php?id=">sup</a>
+										<a href="up_personnel.php?id=">Mod</a>
+
+									</td>
 								</tr>
 							<?php }?>
+								
+							
+
+							
+							
 							
 
 
 							
 						</tbody>
 					</table>
-					
 				</div>
+				
+			</div>
+			<div class="table-data">
+				<div class="order">
+					<div class="head">
+						<h3>Tous les Reponses</h3>
+						<i class='bx bx-search' ></i>
+						<i class='bx bx-filter' ></i>
+					</div>
+					<table>
+						<thead>
+							<tr>
+								<th>reponsePropose</th>
+								<th>bonneReponse</th>
+								<th>idQuestion</th>
+                                <th>action</th>
+							</tr>
+						</thead>
+						<tbody>
+							
+							
+								
+							<?php foreach($reponses as $reponse){ ?>	
+								<tr>
+									<td>
+					
+										<p><?= $reponse->getReponsePropose()?></p>
+									</td>
+									<td><p><?= $reponse->getBonneReponse() ?></p></td>
+									<td>
+										<p><?= $reponse->getIdQuestion() ?></p>
+									</td>
+
+									<td>
+										<a href="delete_personne.php?id=">sup</a>
+										<a href="up_personnel.php?id=">Mod</a>
+
+									</td>
+								</tr>
+							<?php }?>
+								
+							
+
+							
+							
+							
+
+
+							
+						</tbody>
+					</table>
+				</div>
+				
 			</div>
 		</main>
 		<!-- MAIN -->

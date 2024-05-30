@@ -5,9 +5,11 @@ namespace App\Controller;
 use App\Model\EnseignantModel;
 use App\Model\QcmModel;
 use App\Model\QuestionModel;
+use App\Model\ReponseModel;
 use App\Entity\Qcm;
 use App\Entity\Enseignant;
 use App\Entity\Question;
+use App\Entity\Reponse;
 
 
 
@@ -19,6 +21,7 @@ class EnseignantController extends Controller
         $enseignantMdl = new EnseignantModel;
         $qcmMdl = new QcmModel;
         $questionMdl = new QuestionModel;
+        $reponseMdl = new ReponseModel;
 
         if(isset($_GET['action']))
         {
@@ -33,10 +36,12 @@ class EnseignantController extends Controller
                         $idEns = unserialize($_SESSION['enseignant'])->getId();
                         $qcms = $qcmMdl->getQcmByEns($idEns);
                         $questions = $questionMdl->questions($idEns);
+                        $reponses = $reponseMdl->reponses();
+                        
                         
                     }
                     // var_dump($idEns);
-                    $this->render("enseignant/index", ["qcms" => $qcms, "questions" => $questions]);
+                    $this->render("enseignant/index", ["qcms" => $qcms, "questions" => $questions, "reponses" => $reponses]);
                     break;
 
                 case "login_ens":
