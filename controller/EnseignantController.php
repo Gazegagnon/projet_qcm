@@ -37,12 +37,17 @@ class EnseignantController extends Controller
                         $qcms = $qcmMdl->getQcmByEns($idEns);
                         $questions = $questionMdl->questions($idEns);
                         $reponses = $reponseMdl->reponses();
+                        // var_dump($idEns);
+                        $this->render("enseignant/index", ["qcms" => $qcms, "questions" => $questions, "reponses" => $reponses]);
+                        break;
                         
                         
+                    }else{
+                        header("location: ?action=login_ens");
+                        exit;
+
                     }
-                    // var_dump($idEns);
-                    $this->render("enseignant/index", ["qcms" => $qcms, "questions" => $questions, "reponses" => $reponses]);
-                    break;
+                    
 
                 case "login_ens":
                     if(isset($_POST['login_admin']))
