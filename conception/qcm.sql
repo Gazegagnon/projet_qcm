@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : jeu. 02 mai 2024 à 15:45
--- Version du serveur : 10.4.28-MariaDB
--- Version de PHP : 8.2.4
+-- Généré le : mer. 05 juin 2024 à 16:28
+-- Version du serveur : 10.4.27-MariaDB
+-- Version de PHP : 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -47,6 +47,15 @@ CREATE TABLE `enseignant` (
   `email` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Déchargement des données de la table `enseignant`
+--
+
+INSERT INTO `enseignant` (`id`, `nom`, `motDePasse`, `email`) VALUES
+(1, 'Nick Mampassi', 'nick', 'nickmampassi@gmail.com'),
+(5, 'Franklin sainte', 'franklin', 'franklinsainte@gmail.com'),
+(6, 'Christian Clavier', 'clavier', 'clavier@gmail.com');
+
 -- --------------------------------------------------------
 
 --
@@ -58,6 +67,13 @@ CREATE TABLE `qcm` (
   `theme` varchar(100) NOT NULL,
   `idEnseignant` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Déchargement des données de la table `qcm`
+--
+
+INSERT INTO `qcm` (`id`, `theme`, `idEnseignant`) VALUES
+(1, 'intro symfony', 1);
 
 -- --------------------------------------------------------
 
@@ -71,6 +87,14 @@ CREATE TABLE `question` (
   `points` int(11) NOT NULL,
   `idQcm` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Déchargement des données de la table `question`
+--
+
+INSERT INTO `question` (`id`, `libelle`, `points`, `idQcm`) VALUES
+(1, 'symfony est un framwork php?', 2, 1),
+(2, 'symfony &agrave; plusieur version?', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -96,6 +120,14 @@ CREATE TABLE `reponse` (
   `bonneReponse` varchar(200) NOT NULL,
   `idQuestion` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Déchargement des données de la table `reponse`
+--
+
+INSERT INTO `reponse` (`id`, `reponsePropose`, `bonneReponse`, `idQuestion`) VALUES
+(1, 'vrai', 'bonne', 1),
+(2, 'faux', 'pas bonne', 1);
 
 --
 -- Index pour les tables déchargées
@@ -156,25 +188,25 @@ ALTER TABLE `eleve`
 -- AUTO_INCREMENT pour la table `enseignant`
 --
 ALTER TABLE `enseignant`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT pour la table `qcm`
 --
 ALTER TABLE `qcm`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pour la table `question`
 --
 ALTER TABLE `question`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pour la table `reponse`
 --
 ALTER TABLE `reponse`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Contraintes pour les tables déchargées
