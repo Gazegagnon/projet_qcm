@@ -9,7 +9,7 @@ class Reponse
     private $bonneReponse;
     private $idQuestion;
 
-    public function __construct($id,  $reponsePropose,  $bonneReponse,  $idQuestion)
+    public function __construct($id, $reponsePropose, $bonneReponse, $idQuestion)
     {
         $this->id = $id;
         $this->reponsePropose = $reponsePropose;
@@ -36,7 +36,6 @@ class Reponse
     {
         return $this->idQuestion;
     }
-
 
     public function setId($id): void
     {

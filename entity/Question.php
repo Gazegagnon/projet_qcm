@@ -9,13 +9,14 @@ class Question
     private $points;
     private $idQcm;
 
-    public function __construct($id,  $libelle,  $points,  $idQcm)
+    public function __construct($id, $libelle, $points, $idQcm)
     {
         $this->id = $id;
         $this->libelle = $libelle;
         $this->points = $points;
         $this->idQcm = $idQcm;
     }
+
     public function getId()
     {
         return $this->id;
