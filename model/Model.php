@@ -4,7 +4,7 @@ namespace App\Model;
 abstract class Model{
     private $pdo;
     public function __construct(){
-        $this->pdo = new \PDO("mysql:host=127.0.0.1;dbname=qcm","root","",
+        $this->pdo = new \PDO("mysql:host=127.0.0.1;dbname=projet_qcm","root","",
     [
         \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
         \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION
