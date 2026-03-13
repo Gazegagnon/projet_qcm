@@ -26,13 +26,13 @@ $enseignant = $_SESSION['enseignant'];
 		</a>
 		<ul class="side-menu top">
 			<li class="active">
-				<a href="#">
+				<a href="index.php?action=enseignant">
 					<i class='bx bxs-dashboard'></i>
 					<span class="text">Tableau de bord</span>
 				</a>
 			</li>
 			<li>
-				<a href="gestion.php">
+				<a href="index.php?action=enseignant">
 					<i class='bx bxs-shopping-bag-alt'></i>
 					<span class="text">QCM</span>
 				</a>
@@ -52,7 +52,7 @@ $enseignant = $_SESSION['enseignant'];
 		</ul>
 		<ul class="side-menu">
 			<li>
-				<a href="?action=logout" class="logout">
+				<a href="index.php?action=logout" class="logout">
 					<i class='bx bxs-log-out-circle'></i>
 					<span class="text">se déconnecter</span>
 				</a>
@@ -74,14 +74,14 @@ $enseignant = $_SESSION['enseignant'];
 					<h1>Bienvenue <?= htmlspecialchars($enseignant->getNom()) ?></h1>
 					<ul class="breadcrumb">
 						<li>
-							<a href="#">Tableau de bord</a>
+							<a href="index.php?action=enseignant">Tableau de bord</a>
 						</li>
 						<li><i class='bx bx-chevron-right'></i></li>
 					</ul>
 				</div>
 				<a href="#" class="btn-download">
 					<i class='bx bxs-cloud-download'></i>
-					<span class="text" onclick="window.location.href='?action=add_qcm&id=<?= $enseignant->getId() ?>';">
+					<span class="text" onclick="window.location.href='index.php?action=add_qcm&id=<?= $enseignant->getId() ?>';">
 						créer un nouveau QCM
 					</span>
 				</a>
@@ -115,7 +115,11 @@ $enseignant = $_SESSION['enseignant'];
 									<td><p><?= $qcm->getId() ?></p></td>
 									<td><p><?= htmlspecialchars($qcm->getTheme()) ?></p></td>
 									<td>
-										<p><a href="?action=add_question&id=<?= $qcm->getId() ?>">ajouter une nouvelles questions</a></p>
+										<p>
+											<a href="index.php?action=add_question&id=<?= $qcm->getId() ?>">
+												ajouter une nouvelles questions
+											</a>
+										</p>
 									</td>
 									<td>
 										<a href="delete_personne.php?id=">sup</a>
@@ -154,7 +158,11 @@ $enseignant = $_SESSION['enseignant'];
 									<td><p><?= $question->getPoints() ?></p></td>
 									<td><p><?= $question->getIdQcm() ?></p></td>
 									<td>
-										<p><a href="?action=add_Reponse&id=<?= $question->getId() ?>">ajouter une nouvelle reponse</a></p>
+										<p>
+											<a href="index.php?action=add_Reponse&id=<?= $question->getId() ?>">
+												ajouter une nouvelle reponse
+											</a>
+										</p>
 									</td>
 									<td>
 										<a href="delete_personne.php?id=">sup</a>

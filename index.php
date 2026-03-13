@@ -1,7 +1,6 @@
 <?php
-session_start();
-
 require_once "vendor/autoload.php";
+session_start();
 
 use App\Controller\EnseignantController;
 use App\Controller\QcmController;

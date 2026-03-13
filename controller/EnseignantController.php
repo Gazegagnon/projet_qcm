@@ -43,7 +43,8 @@ class EnseignantController extends Controller
 
                 case "login_ens":
                     if (isset($_POST['login_admin'])) {
-                        extract($_POST);
+                        $mail = $_POST['mail'] ?? '';
+                        $mdpEns = $_POST['mdpEns'] ?? '';
 
                         $enseignant = $enseignantMdl->login($mail, $mdpEns);
 
@@ -63,7 +64,9 @@ class EnseignantController extends Controller
 
                 case "add_admin":
                     if (isset($_POST['new_admin'])) {
-                        extract($_POST);
+                        $nom = $_POST['nom'] ?? '';
+                        $mdp = $_POST['mdp'] ?? '';
+                        $mail = $_POST['mail'] ?? '';
 
                         $enseignant = new Enseignant(0, $nom, $mdp, $mail);
                         $enseignantCree = $enseignantMdl->create($enseignant);

@@ -11,8 +11,8 @@ class EnseignantModel extends Model
         $sql = "INSERT INTO enseignant VALUES (NULL, :nom, :mdp, :mail)";
 
         $this->executereq($sql, [
-            "nom"  => $enseignant->getNom(),
-            "mdp"  => $enseignant->getMotDePasse(),
+            "nom" => $enseignant->getNom(),
+            "mdp" => $enseignant->getMotDePasse(),
             "mail" => $enseignant->getEmail()
         ]);
 
@@ -31,7 +31,7 @@ class EnseignantModel extends Model
         $sql = "SELECT * FROM enseignant WHERE motDePasse = :mdp AND email = :email";
 
         $stmt = $this->executereq($sql, [
-            "mdp"   => $mdpEns,
+            "mdp" => $mdpEns,
             "email" => $mail
         ]);
 
