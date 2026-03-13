@@ -37,7 +37,7 @@ class EnseignantController extends Controller
                         ]);
                         break;
                     } else {
-                        header("Location: ?action=login_ens");
+                        header("Location: index.php?action=login_ens");
                         exit;
                     }
 
@@ -49,7 +49,7 @@ class EnseignantController extends Controller
 
                         if ($enseignant) {
                             $_SESSION['enseignant'] = $enseignant;
-                            header("Location: ?action=enseignant");
+                            header("Location: index.php?action=enseignant");
                             exit;
                         } else {
                             $erreur = "Email ou mot de passe incorrect.";
@@ -70,7 +70,7 @@ class EnseignantController extends Controller
 
                         if ($enseignantCree) {
                             $_SESSION['enseignant'] = $enseignantCree;
-                            header("Location: ?action=enseignant");
+                            header("Location: index.php?action=enseignant");
                             exit;
                         }
                     }
@@ -81,7 +81,7 @@ class EnseignantController extends Controller
                 case "logout":
                     unset($_SESSION['enseignant']);
                     session_destroy();
-                    header("Location: ?action=login_ens");
+                    header("Location: index.php?action=login_ens");
                     exit;
             }
         }

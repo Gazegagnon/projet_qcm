@@ -9,7 +9,7 @@ class EnseignantModel extends Model
     public function create($enseignant)
     {
         $sql = "INSERT INTO enseignant VALUES (NULL, :nom, :mdp, :mail)";
-        
+
         $this->executereq($sql, [
             "nom"  => $enseignant->getNom(),
             "mdp"  => $enseignant->getMotDePasse(),
@@ -29,7 +29,7 @@ class EnseignantModel extends Model
     public function login($mail, $mdpEns)
     {
         $sql = "SELECT * FROM enseignant WHERE motDePasse = :mdp AND email = :email";
-        
+
         $stmt = $this->executereq($sql, [
             "mdp"   => $mdpEns,
             "email" => $mail

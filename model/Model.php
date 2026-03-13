@@ -1,43 +1,47 @@
 <?php
+
 namespace App\Model;
 
-abstract class Model{
+abstract class Model
+{
     private $pdo;
-    public function __construct(){
-        $this->pdo = new \PDO("mysql:host=127.0.0.1;dbname=projet_qcm","root","",
-    [
-        \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
-        \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION
-    ]);}
 
-  public function executereq($sql, array $param=[]){
-    $stmt=$this->pdo->prepare($sql);
-    foreach($param as $cle=>$valeur){
-        $param[$cle]=htmlentities($valeur);
+    public function __construct()
+    {
+        $this->pdo = new \PDO(
+            "mysql:host=127.0.0.1;dbname=projet_qcm",
+            "root",
+            "",
+            [
+                \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
+                \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION
+            ]
+        );
     }
 
-    $stmt->execute($param);
-    return $stmt;
-  }
+    public function executereq($sql, array $param = [])
+    {
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($param);
+        return $stmt;
+    }
 
-  public function getAll($table)
-  {
-    $sql ="SELECT * FROM".$table;
-    return $this->executereq($sql);
+    public function getAll($table)
+    {
+        $sql = "SELECT * FROM " . $table;
+        return $this->executereq($sql);
+    }
 
-  }
+    public function getOne($table, $id)
+    {
+        $query = "SELECT * FROM " . $table . " WHERE id = :id";
+        return $this->executereq($query, ["id" => $id]);
+    }
 
-  public function getOne($table, $id)
-  {
-    $query = "SELECT * FROM " . $table . " WHERE id = :id";
-    return $this->executereq($query, ["id" => $id]);
-  }
+    public function getPdo()
+    {
+        return $this->pdo;
+    }
 
-  public function getPdo()
-  {
-    return $this->pdo;
-  }
-
-  abstract public function create($objet);
-	
+    abstract public function create($objet);
 }
