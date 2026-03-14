@@ -79,4 +79,22 @@ class QuestionModel extends Model
             $resultat['idQcm']
         );
     }
+
+    public function countQuestionsByQcm($idQcm)
+    {
+        $sql = "SELECT COUNT(*) AS total FROM question WHERE idQcm = :idQcm";
+        $stmt = $this->executereq($sql, ["idQcm" => $idQcm]);
+        $result = $stmt->fetch();
+
+        return $result ? (int)$result['total'] : 0;
+    }
+
+    public function totalPointsByQcm($idQcm)
+    {
+        $sql = "SELECT SUM(points) AS total FROM question WHERE idQcm = :idQcm";
+        $stmt = $this->executereq($sql, ["idQcm" => $idQcm]);
+        $result = $stmt->fetch();
+
+        return $result && $result['total'] ? (int)$result['total'] : 0;
+    }
 }

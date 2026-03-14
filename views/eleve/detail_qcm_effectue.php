@@ -4,13 +4,13 @@ if (!isset($_SESSION['eleve']) || !is_object($_SESSION['eleve'])) {
     exit;
 }
 
-$pourcentage = $total > 0 ? round(($score / $total) * 100, 2) : 0;
+$pourcentage = $resultat->getTotal() > 0 ? round(($resultat->getScore() / $resultat->getTotal()) * 100, 2) : 0;
 ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Résultat du QCM</title>
+    <title>Détail du QCM effectué</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css">
 </head>
@@ -18,13 +18,14 @@ $pourcentage = $total > 0 ? round(($score / $total) * 100, 2) : 0;
 
 <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="fw-bold">Résultat - <?= htmlspecialchars($qcm->getTheme()) ?></h2>
-        <a href="index.php?action=eleve_dashboard" class="btn btn-secondary">Retour au dashboard</a>
+        <h2 class="fw-bold">Détail - <?= htmlspecialchars($qcm->getTheme()) ?></h2>
+        <a href="index.php?action=qcm_effectues" class="btn btn-secondary">Retour</a>
     </div>
 
     <div class="card border-0 shadow-sm mb-4">
         <div class="card-body">
-            <h4>Score : <?= $score ?> / <?= $total ?> (<?= $pourcentage ?>%)</h4>
+            <h4>Score obtenu : <?= $resultat->getScore() ?> / <?= $resultat->getTotal() ?> (<?= $pourcentage ?>%)</h4>
+            <p class="text-muted mb-0">Date : <?= htmlspecialchars($resultat->getDateResultat()) ?></p>
         </div>
     </div>
 
@@ -43,7 +44,12 @@ $pourcentage = $total > 0 ? round(($score / $total) * 100, 2) : 0;
                     <?= htmlspecialchars($detail['bonneReponse']) ?>
                 </p>
 
-                <?php if ($detail['estBonne']) : ?>
+                <p>
+                    <strong>Points obtenus :</strong>
+                    <?= $detail['pointsObtenus'] ?> / <?= $detail['question']->getPoints() ?>
+                </p>
+
+                <?php if ($detail['estCorrecte']) : ?>
                     <span class="badge bg-success">Correct</span>
                 <?php else : ?>
                     <span class="badge bg-danger">Incorrect</span>

@@ -74,4 +74,17 @@ class QcmModel extends Model
             $resultat['idEnseignant']
         );
     }
+
+    public function getNomEnseignantByQcm($idQcm)
+    {
+        $sql = "SELECT e.nom 
+                FROM qcm q
+                INNER JOIN enseignant e ON q.idEnseignant = e.id
+                WHERE q.id = :idQcm";
+
+        $stmt = $this->executereq($sql, ["idQcm" => $idQcm]);
+        $resultat = $stmt->fetch();
+
+        return $resultat ? $resultat['nom'] : "Inconnu";
+    }
 }

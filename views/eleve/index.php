@@ -23,6 +23,13 @@ $eleve = $_SESSION['eleve'];
         </div>
     </div>
 
+    <?php if (isset($_SESSION['message_qcm'])) : ?>
+        <div class="alert alert-warning">
+            <?= htmlspecialchars($_SESSION['message_qcm']) ?>
+        </div>
+        <?php unset($_SESSION['message_qcm']); ?>
+    <?php endif; ?>
+
     <div class="mb-4">
         <h4>Mes informations</h4>
         <p><strong>Nom :</strong> <?= htmlspecialchars($eleve->getNom()) ?></p>
@@ -47,9 +54,13 @@ $eleve = $_SESSION['eleve'];
                             <td><?= $qcm->getId() ?></td>
                             <td><?= htmlspecialchars($qcm->getTheme()) ?></td>
                             <td>
-                                <a href="index.php?action=questions_qcm&id=<?= $qcm->getId() ?>" class="btn btn-primary btn-sm">
-                                    Commencer
-                                </a>
+                                <?php if ($resultatMdl->resultatExiste($eleve->getId(), $qcm->getId())) : ?>
+                                    <span class="btn btn-secondary btn-sm disabled">Déjà soumis</span>
+                                <?php else : ?>
+                                    <a href="index.php?action=questions_qcm&id=<?= $qcm->getId() ?>" class="btn btn-primary btn-sm">
+                                        Commencer
+                                    </a>
+                                <?php endif; ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>

@@ -8,22 +8,17 @@ class EleveModel extends Model
 {
     public function create($eleve)
     {
-        $sql = "INSERT INTO eleve VALUES (NULL, :nom, :mdp, :mail)";
+        $sql = "INSERT INTO eleve (nom, motDePasse, email) VALUES (:nom, :mdp, :mail)";
 
         $this->executereq($sql, [
-            "nom" => $eleve->getNom(),
-            "mdp" => $eleve->getMotDePasse(),
+            "nom"  => $eleve->getNom(),
+            "mdp"  => $eleve->getMotDePasse(),
             "mail" => $eleve->getEmail()
         ]);
 
         $id = $this->getPdo()->lastInsertId();
 
-        return new Eleve(
-            $id,
-            $eleve->getNom(),
-            $eleve->getMotDePasse(),
-            $eleve->getEmail()
-        );
+        return $this->Eleve($id);
     }
 
     public function login($mail, $mdpEleve)
@@ -31,7 +26,7 @@ class EleveModel extends Model
         $sql = "SELECT * FROM eleve WHERE motDePasse = :mdp AND email = :email";
 
         $stmt = $this->executereq($sql, [
-            "mdp" => $mdpEleve,
+            "mdp"   => $mdpEleve,
             "email" => $mail
         ]);
 
@@ -42,7 +37,9 @@ class EleveModel extends Model
                 $resultat['id'],
                 $resultat['nom'],
                 $resultat['motDePasse'],
-                $resultat['email']
+                $resultat['email'],
+                $resultat['dateInscription'] ?? null,
+                $resultat['photo'] ?? null
             );
         }
 
@@ -56,21 +53,31 @@ class EleveModel extends Model
         return $stmt->fetch() ? true : false;
     }
 
-    public function Eleves()
+    public function emailExistePourAutreEleve($email, $idEleve)
     {
-        $stmt = $this->getAll("eleve");
-        $tab = [];
+        $sql = "SELECT * FROM eleve WHERE email = :email AND id != :id";
+        $stmt = $this->executereq($sql, [
+            "email" => $email,
+            "id" => $idEleve
+        ]);
 
-        while ($resultat = $stmt->fetch()) {
-            $tab[] = new Eleve(
-                $resultat['id'],
-                $resultat['nom'],
-                $resultat['motDePasse'],
-                $resultat['email']
-            );
-        }
+        return $stmt->fetch() ? true : false;
+    }
 
-        return $tab;
+    public function update($eleve)
+    {
+        $sql = "UPDATE eleve 
+                SET nom = :nom, motDePasse = :mdp, email = :mail
+                WHERE id = :id";
+
+        $this->executereq($sql, [
+            "nom"  => $eleve->getNom(),
+            "mdp"  => $eleve->getMotDePasse(),
+            "mail" => $eleve->getEmail(),
+            "id"   => $eleve->getId()
+        ]);
+
+        return $this->Eleve($eleve->getId());
     }
 
     public function Eleve($id)
@@ -86,7 +93,9 @@ class EleveModel extends Model
             $resultat['id'],
             $resultat['nom'],
             $resultat['motDePasse'],
-            $resultat['email']
+            $resultat['email'],
+            $resultat['dateInscription'] ?? null,
+            $resultat['photo'] ?? null
         );
     }
 }
