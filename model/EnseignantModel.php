@@ -9,10 +9,10 @@ class EnseignantModel extends Model
     public function create($enseignant)
     {
         $sql = "INSERT INTO enseignant VALUES (NULL, :nom, :mdp, :mail)";
-
+        
         $this->executereq($sql, [
-            "nom" => $enseignant->getNom(),
-            "mdp" => $enseignant->getMotDePasse(),
+            "nom"  => $enseignant->getNom(),
+            "mdp"  => $enseignant->getMotDePasse(),
             "mail" => $enseignant->getEmail()
         ]);
 
@@ -29,9 +29,9 @@ class EnseignantModel extends Model
     public function login($mail, $mdpEns)
     {
         $sql = "SELECT * FROM enseignant WHERE motDePasse = :mdp AND email = :email";
-
+        
         $stmt = $this->executereq($sql, [
-            "mdp" => $mdpEns,
+            "mdp"   => $mdpEns,
             "email" => $mail
         ]);
 
@@ -47,6 +47,20 @@ class EnseignantModel extends Model
         }
 
         return false;
+    }
+
+    public function update($enseignant)
+    {
+        $sql = "UPDATE enseignant SET nom = :nom, motDePasse = :mdp, email = :mail WHERE id = :id";
+
+        $this->executereq($sql, [
+            "nom" => $enseignant->getNom(),
+            "mdp" => $enseignant->getMotDePasse(),
+            "mail" => $enseignant->getEmail(),
+            "id" => $enseignant->getId()
+        ]);
+
+        return $enseignant;
     }
 
     public function Enseignants()

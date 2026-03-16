@@ -8,11 +8,12 @@ class QcmModel extends Model
 {
     public function create($qcm)
     {
-        $sql = "INSERT INTO qcm VALUES (NULL, :theme, :idEn)";
+        $sql = "INSERT INTO qcm (theme, idEnseignant, statut) VALUES (:theme, :idEn, :statut)";
 
         $this->executereq($sql, [
             "theme" => $qcm->getTheme(),
-            "idEn"  => $qcm->getIdEnseignant()
+            "idEn"  => $qcm->getIdEnseignant(),
+            "statut" => $qcm->getStatut()
         ]);
 
         $id = $this->getPdo()->lastInsertId();
@@ -20,7 +21,8 @@ class QcmModel extends Model
         return new Qcm(
             $id,
             $qcm->getTheme(),
-            $qcm->getIdEnseignant()
+            $qcm->getIdEnseignant(),
+            $qcm->getStatut()
         );
     }
 
@@ -34,7 +36,8 @@ class QcmModel extends Model
             $tab[] = new Qcm(
                 $resultat['id'],
                 $resultat['theme'],
-                $resultat['idEnseignant']
+                $resultat['idEnseignant'],
+                $resultat['statut'] ?? 'actif'
             );
         }
 
@@ -51,7 +54,8 @@ class QcmModel extends Model
             $tab[] = new Qcm(
                 $resultat['id'],
                 $resultat['theme'],
-                $resultat['idEnseignant']
+                $resultat['idEnseignant'],
+                $resultat['statut'] ?? 'actif'
             );
         }
 
@@ -71,7 +75,8 @@ class QcmModel extends Model
         return new Qcm(
             $resultat['id'],
             $resultat['theme'],
-            $resultat['idEnseignant']
+            $resultat['idEnseignant'],
+            $resultat['statut'] ?? 'actif'
         );
     }
 

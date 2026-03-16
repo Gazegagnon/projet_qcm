@@ -8,6 +8,8 @@ class EleveModel extends Model
 {
     public function create($eleve)
     {
+        // Version compatible avec une table simple :
+        // id, nom, motDePasse, email
         $sql = "INSERT INTO eleve (nom, motDePasse, email) VALUES (:nom, :mdp, :mail)";
 
         $this->executereq($sql, [
@@ -32,24 +34,18 @@ class EleveModel extends Model
 
         $resultat = $stmt->fetch();
 
-        if ($resultat) {
-            return new Eleve(
-                $resultat['id'],
-                $resultat['nom'],
-                $resultat['motDePasse'],
-                $resultat['email'],
-                $resultat['dateInscription'] ?? null,
-                $resultat['photo'] ?? null
-            );
+        if (!$resultat) {
+            return false;
         }
 
-        return false;
+        return $this->buildEleve($resultat);
     }
 
     public function emailExiste($email)
     {
         $sql = "SELECT * FROM eleve WHERE email = :email";
         $stmt = $this->executereq($sql, ["email" => $email]);
+
         return $stmt->fetch() ? true : false;
     }
 
@@ -58,7 +54,7 @@ class EleveModel extends Model
         $sql = "SELECT * FROM eleve WHERE email = :email AND id != :id";
         $stmt = $this->executereq($sql, [
             "email" => $email,
-            "id" => $idEleve
+            "id"    => $idEleve
         ]);
 
         return $stmt->fetch() ? true : false;
@@ -80,6 +76,19 @@ class EleveModel extends Model
         return $this->Eleve($eleve->getId());
     }
 
+    public function Eleves()
+    {
+        $sql = "SELECT * FROM eleve ORDER BY nom ASC";
+        $stmt = $this->executereq($sql);
+        $tab = [];
+
+        while ($resultat = $stmt->fetch()) {
+            $tab[] = $this->buildEleve($resultat);
+        }
+
+        return $tab;
+    }
+
     public function Eleve($id)
     {
         $stmt = $this->getOne("eleve", $id);
@@ -89,13 +98,36 @@ class EleveModel extends Model
             return false;
         }
 
+        return $this->buildEleve($resultat);
+    }
+
+    /**
+     * Construit un objet Eleve en restant compatible
+     * avec une entité simple (4 paramètres)
+     * ou enrichie (6 paramètres avec dateInscription et photo).
+     */
+    private function buildEleve(array $resultat): Eleve
+    {
+        $reflection = new \ReflectionClass(Eleve::class);
+        $constructor = $reflection->getConstructor();
+        $nbParams = $constructor ? $constructor->getNumberOfParameters() : 0;
+
+        if ($nbParams >= 6) {
+            return new Eleve(
+                $resultat['id'],
+                $resultat['nom'],
+                $resultat['motDePasse'],
+                $resultat['email'],
+                $resultat['dateInscription'] ?? null,
+                $resultat['photo'] ?? null
+            );
+        }
+
         return new Eleve(
             $resultat['id'],
             $resultat['nom'],
             $resultat['motDePasse'],
-            $resultat['email'],
-            $resultat['dateInscription'] ?? null,
-            $resultat['photo'] ?? null
+            $resultat['email']
         );
     }
 }

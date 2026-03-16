@@ -7,13 +7,16 @@ class Qcm
     private $id;
     private $theme;
     private $idEnseignant;
+    private $statut;
 
-    public function __construct($id,  $theme, $idEnseignant)
+    public function __construct($id, $theme, $idEnseignant, $statut = 'actif')
     {
         $this->id = $id;
         $this->theme = $theme;
         $this->idEnseignant = $idEnseignant;
+        $this->statut = $statut;
     }
+
     public function getId()
     {
         return $this->id;
@@ -29,6 +32,11 @@ class Qcm
         return $this->idEnseignant;
     }
 
+    public function getStatut()
+    {
+        return $this->statut;
+    }
+
     public function setId($id): void
     {
         $this->id = $id;
@@ -42,5 +50,10 @@ class Qcm
     public function setIdEnseignant($idEnseignant): void
     {
         $this->idEnseignant = $idEnseignant;
+    }
+
+    public function setStatut($statut): void
+    {
+        $this->statut = $statut;
     }
 }
